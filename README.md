@@ -85,7 +85,35 @@ Teosinte = Groups ZMPBA, ZMPIL, ZMPJA
 
 `$ grep -v "^#" snp_position.txt | cut -f 1,3,4 > cut_snp_position.txt`
 
+* **Exclude header from files**  
+At first I thought that having the headers would help me in joining the files, but I realized that they are making it more complicated. So I am removing them in order to make it easier.
+
+`$ grep -v "Group" transposed_maize.txt > maize_noheader.txt`
+`$ grep -v "Group" transposed_teosinte.txt > teosinte_noheader.txt`
+`$ grep -v "SNP_ID" cut_snp_position.txt > snp_noheader.txt`
+
 * **Sort files**
 
-`$ sort -k1,1 cut_snp_position.txt > sorted_snp_position.txt`
-`$ sort -k1,1 transposed_maize_genotypes.txt > sorted_maize_genotypes.txt`
+`$ sort -k1,1 snp_noheader.txt > sorted_snp.txt`
+`$ sort -k1,1 maize_noheader.txt > sorted_maize.txt`
+`$ sort -k1,1 teosinte_noheader.txt > sorted_teosinte.txt`
+
+* **Checking if files are sorted**
+
+`$ sort -k1,1 -c sorted_snp.txt | echo $?`
+returned 0
+`sort -k1,1 -c sorted_maize.txt | echo $?`
+returned 0
+`sort -k1,1 -c sorted_teosinte.txt | echo $?`
+returned 0
+
+* **
+
+* _Stage and commit new files_  
+
+`$ git add .`
+`$ git commit -m "new extracted and transposed maize and teosinte files"`
+`$ git push origin master`
+
+* **
+
