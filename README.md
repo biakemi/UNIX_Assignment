@@ -33,5 +33,9 @@ UNIX assignment repository
 15 columns
 
 **Comitting changes in README files**  
-`&git commit -m "changes in README file"`
+`$git commit -m "changes in README file"`
 
+**Push changes to repository**  
+`$ git push origin master`
+
+###Data processing
