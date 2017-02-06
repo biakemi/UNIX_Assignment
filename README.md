@@ -29,29 +29,63 @@ UNIX assignment repository
 1. `$awk -F "\t" '{print NF; exit} fang_et_al_genotypes.txt`   
 986 columns
 
-2. `$awk -F "\t" '{print NF; exit} `  
+2. `$awk -F "\t" '{print NF; exit} snp_position.txt`  
 15 columns
 
-**Comitting changes in README files**  
-`$git commit -m "changes in README file"`
+* **
+* _Comitting changes in README files_  
+`$ git commit -m "changes in README file"`
 
-**Push changes to repository**  
+_Push changes to repository_  
 `$ git push origin master`
 
+* **
 ###Data processing
 
 * **Extract maize data**
 
 Maize = Groups ZMMIL, ZMMLR, ZMMMR  
-`$grep -E "(ZMMIL|ZMMLR|ZMMMR)" fang_et_al_genotypes.txt > maize_genotypes.txt`
+`$ grep -E "(ZMMIL|ZMMLR|ZMMMR)" fang_et_al_genotypes.txt > maize_genotypes.txt`
 
 * **Extract teosinte data**
 
 Teosinte = Groups ZMPBA, ZMPIL, ZMPJA  
-`$grep -E "(ZMPBA|ZMPIL|ZMPJA)" fang_et_al_genotypes.txt > teosinte.txt`
+`$ grep -E "(ZMPBA|ZMPIL|ZMPJA)" fang_et_al_genotypes.txt > teosinte_genotypes.txt`
+
+* **Extract header**
+
+`$ grep "Group" fang_et_al_genotypes.txt > header.txt`
+
+* **Concatenate header with extracted files**
+
+`$ cat header.txt maize_genotypes.txt > maize.txt`
+`$ cat header.txt teosinte_genotypes.txt > teosinte.txt`
+
+* **Cut unnecessary columns**
+
+`$ cut -f 3-968 maize.txt > cut_maize.txt`
+`$ cut -f 3-968 teosinte.txt > cut_teosinte.txt`
 
 * **Transpose the data**
 
-`$ awk -f transpose.awk maize_genotypes.txt > transposed_maize_genotypes.txt`  
-`$ awk -f transpose.awk teosinte_genotypes.txt > transposed_teosinte_genotypes.txt`
+`$ awk -f transpose.awk cut_maize.txt > transposed_maize.txt`  
+`$ awk -f transpose.awk cut_teosinte.txt > transposed_teosinte.txt`
 
+* **
+
+* _Stage and commit new files_  
+
+`$ git add .`
+`$ git commit -m "new extracted and transposed maize and teosinte files"`
+`$ git push origin master`
+
+* **
+
+* **Cut snp_position.txt columns that matter**
+
+`$ grep -v "^#" snp_position.txt | cut -f 1,3,4 > cut_snp_position.txt`
+
+* **Sort files**
+
+`$ sort -k1,1 cut_snp_position.txt > sorted_snp_position.txt`
+`$ sort -k1,1 transposed_maize_genotypes.txt > sorted_maize_genotypes.txt`
