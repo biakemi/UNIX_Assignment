@@ -39,3 +39,19 @@ UNIX assignment repository
 `$ git push origin master`
 
 ###Data processing
+
+* **Extract maize data**
+
+Maize = Groups ZMMIL, ZMMLR, ZMMMR  
+`$grep -E "(ZMMIL|ZMMLR|ZMMMR)" fang_et_al_genotypes.txt > maize_genotypes.txt`
+
+* **Extract teosinte data**
+
+Teosinte = Groups ZMPBA, ZMPIL, ZMPJA  
+`$grep -E "(ZMPBA|ZMPIL|ZMPJA)" fang_et_al_genotypes.txt > teosinte.txt`
+
+* **Transpose the data**
+
+`$ awk -f transpose.awk maize_genotypes.txt > transposed_maize_genotypes.txt`  
+`$ awk -f transpose.awk teosinte_genotypes.txt > transposed_teosinte_genotypes.txt`
+
