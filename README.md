@@ -121,3 +121,51 @@ returned 0
 
 `$ join -t $'\t' -1 1 -2 1 sorted_snp.txt sorted_maize.txt > maize_data.txt`  
 `$ join -t $'\t' -1 1 -2 1 sorted_snp.txt sorted_teosinte.txt > teosinte_data.txt` 
+
+* **
+
+* _Stage and commit new files_  
+
+`$ git add .`
+`$ git commit -m "joined files"`
+`$ git push origin master`
+
+* **
+
+
+* **Sort files by chromosome number**
+
+`$ sort -k2,2n maize_data.txt > maize_sorted_by_chr.txt`
+`$ sort -k2,2n teosinte_data.txt > teosinte_sorted_by_chr.txt`
+
+*  **Insert special characters in missing data**
+
+1.  substituing missing data with ?
+`$ sed 's/<TAB>/?/g' maize_sorted_by_chr.txt > maize_substituted.txt`  
+`$ sed 's/<TAB>/?/g' teosinte_sorted_by_chr.txt > teosinte_substituted.txt`  
+
+2.  substituing ? with -
+`$ sed 's/?/-/g' maize_substituted.txt > maize_substituted_dash.txt`  
+`$ sed 's/?/-/g' teosinte_substituted.txt > teosinte_substituted_dash.txt`
+
+*  **Extract data by chromosome number**
+
+`$ awk '$2 == /1/' maize_substituted.txt > maize_chr1.txt`  
+`$ awk '$2 ~ /2/' maize_substituted.txt > maize_chr2.txt`
+`$ awk '$2 ~ /3/' maize_substituted.txt > maize_chr3.txt`
+... repeated for all chromosomes, input files and output files
+
+- Name of input files with respective output files
+`maize_substituted_dash.txt > maize_chr#_dash.txt`
+`teosinte_substituted.txt > teosinte_chr#.txt`
+`teosinte_substituted_dash.txt > teosinte_chr#_dash.txt`  
+
+* **
+* _Stage and commit new files_  
+
+`$ git add .`
+`$ git commit -m "files with missing data replaced by special characters and data divided by chromosome number"`
+`$ git push origin master`
+
+* **
+
