@@ -117,3 +117,7 @@ returned 0
 
 * **
 
+* **Join the files**
+
+`$ join -t $'\t' -1 1 -2 1 sorted_snp.txt sorted_maize.txt > maize_data.txt`  
+`$ join -t $'\t' -1 1 -2 1 sorted_snp.txt sorted_teosinte.txt > teosinte_data.txt` 
