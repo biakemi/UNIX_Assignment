@@ -169,3 +169,42 @@ returned 0
 
 * **
 
+* **Dividing files in folders to keep it organized, because there is too many files**
+
+`$ mkdir raw_data extracted_transposed_data sorted_joined_data substituted_data`
+`$ mv fang_et_al_genotypes.txt snp_position.txt raw_data/`
+... repeated the `mv` command to others files
+
+* **Sort files with ? according to SNP increased position values**
+`$ sort -k3,3n maize_chr#.txt > maize_snp_chr#.txt`
+`$ sort -k3,3n teosinte_chr#.txt > teosinte_snp_chr#.txt`
+
+* **Sort files with - according to SNP decreasing position values**  
+`$ sort -k3,3nr maize_chr#_dash.txt > maize_snp_chr#_reversed.txt`
+`$ sort -k3,3nr teosinte_chr#_dash.txt > teosinte_snp_chr#_reversed.txt`
+
+* **Organizing the unsorted files in folders**
+
+`$ mkdir maize_chr_data teosinte_chr_data`
+`$ mv maize_chr*.txt maize_chr_data/`
+`$ mv teosinte_chr*.txt teosinte_chr_data/`
+
+
+**Results:**  
+
+* 20 files (1 for each chromosome), for maize and teosinte with SNPs ordered based on increasing position values and with missing data encoded by ?  
+	* `maize_snp_chr#.txt` and `teosinte_snp_chr#.txt`  
+
+
+* 20 files (1 for each chromosome), for maize and teosinte with SNPs ordered based on decreasing position values and with missing data encoded by -
+	* `maize_snp_chr#_reversed.txt` and `teosinte_snp_chr#_reversed.txt`
+
+
+* **
+* _Stage and commit new files_  
+
+`$ git add .`
+`$ git commit -m "final files and complete README"`
+`$ git push origin master`
+
+* **
