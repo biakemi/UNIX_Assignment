@@ -208,3 +208,7 @@ returned 0
 `$ git push origin master`
 
 * **
+
+#R Assignment
+All commands are in R notebook.
+Comparing the flow work with UNIX analysis, using R was simpler due to the RStudio interface - I was able to check my results and do not get lost. Given that, I didn't do the steps of putting and removing the header as I did in UNIX, but, on the other hand, I had to include a step to make my row names as columns so I could merge the data frames.

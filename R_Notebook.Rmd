@@ -13,8 +13,9 @@ Loading files to R
 fang <- read.table("fang_et_al_genotypes.txt", header = TRUE )
 position <- read.table("snp_position.txt", header = TRUE, fill = TRUE)
 ```
+#Part 1
 
-Data Inspection
+##Data Inspection
 ```{r}
 str(fang)
 str(position)
@@ -29,9 +30,9 @@ head(fang, n = 1)
 head(position, n = 3)
 ```
 
-Data processing
+##Data processing
 
-Subset unnecessary columns
+Subset necessary columns
 ```{r}
 fang_subset <- subset(fang, select = -c(1:2))
 ```
@@ -66,10 +67,99 @@ position_sorted <- position_subset[order(position_subset$SNP_ID),]
 
 Remove data from "unknown and random" chromosomes in SNP position file
 ```{r}
-chromosome <- c(1,2,3,4,5,6,7,8,9,10)
-position_sorted_selected <- position_sorted %>% filter(Chromosome %in% chromosome)
+chrom <- c(1,2,3,4,5,6,7,8,9,10)
+position_sorted_selected <- subset(position_sorted, Chromosome %in% chrom)
 position_sorted <- position_sorted_selected[-1,]
 ```
+Making row names as columns so I can join the data frames
+```{r}
+maize_row <- add_rownames(maize_sorted, "SNP_ID")
+teosinte_row <- add_rownames(teosinte_sorted, "SNP_ID")
+```
 
-group by chromosome = group_by(Chromsome)
-function reshape - for the second part of the homework
+Merge maize and teosinte data with snp position data
+```{r}
+maize_merged <- merge(position_sorted, maize_row, by="SNP_ID")
+teosinte_merged <- merge(position_sorted, teosinte_row, by="SNP_ID")
+``` 
+
+Sort by SNP position - ascending order
+```{r}
+maize_sorted_by_position <- arrange(maize_merged, Position)  #ascending position
+teosinte_sorted_by_position <- arrange(teosinte_merged, Position) #ascending position 
+```
+
+Substitute symbols - no data by ?
+```{r}
+gsub("","?", maize_sorted_by_position) 
+gsub("", "?", teosinte_sorted_by_position)
+```
+
+Sort by SNP position - descending order
+```{r}
+maize_desc_sorted_by_position <- arrange(maize_merged, desc(Position))
+teosinte_desc_sorted_by_position <- arrange(teosinte_merged, desc(Position))
+```
+Substitute symbols - no data by -
+ 
+```{r}
+gsub("","-", maize_desc_sorted_by_position) 
+gsub("","-", teosinte_desc_sorted_by_position)
+```
+
+Extract data by chromosome number
+```{r}
+for(i in 1:10){
+ temp_df<-maize_sorted_by_position[maize_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste("maize_chr",i,".csv",sep=""),row.names=F)}
+
+for(i in 1:10){
+ temp_df<-teosinte_sorted_by_position[teosinte_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste("teosinte_chr",i,".csv",sep=""),row.names=F)}
+
+for(i in 1:10){
+ temp_df<-maize_desc_sorted_by_position[maize_desc_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste("maize_desc_chr",i,".csv",sep=""),row.names=F)}
+
+for(i in 1:10){
+ temp_df<-teosinte_desc_sorted_by_position[teosinte_desc_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste("teosinte_desc_chr",i,".csv",sep=""),row.names=F)}
+```
+
+
+###Part 1 finished
+
+#Part 2
+
+Tidying the data 
+```{r}
+library(reshape2)
+maize_reshaped <- melt(maize_merged, id=(c("SNP_ID","Chromosome","Position")))
+teosinte_reshaped <- melt(teosinte_merged, id=(c("SNP_ID","Chromosome","Position")))
+```
+
+Plot total number of SNPs by chromosome number
+```{r}
+
+```
+
+Create new column indicating if site is homozygous or heterozygous
+```{r}
+
+```
+
+Substitute missing data with NA
+```{r}
+
+```
+
+Sort dataframe by Species_ID and Group values
+```{r}
+
+```
+
+Graph that shows the proportion of homozygous and heterozygous sites as well as missing data in each species
+```{r}
+
+```
+

@@ -175,14 +175,24 @@ $(document).ready(function () {
 <p>Setting the directory</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0d2QoXCJ+L0Rlc2t0b3AvQmlvRGF0YVNraWxsc0NsYXNzL1VOSVhfQXNzaWdubWVudFwiKVxuYGBgIn0= -->
+<pre class="r"><code>setwd(&quot;~/Desktop/BioDataSkillsClass/UNIX_Assignment&quot;)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Loading files to R</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFuZyA8LSByZWFkLnRhYmxlKFwiZmFuZ19ldF9hbF9nZW5vdHlwZXMudHh0XCIsIGhlYWRlciA9IFRSVUUgKVxucG9zaXRpb24gPC0gcmVhZC50YWJsZShcInNucF9wb3NpdGlvbi50eHRcIiwgaGVhZGVyID0gVFJVRSwgZmlsbCA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code>fang &lt;- read.table(&quot;fang_et_al_genotypes.txt&quot;, header = TRUE )
+position &lt;- read.table(&quot;snp_position.txt&quot;, header = TRUE, fill = TRUE)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Data Inspection</p>
+<div id="part-1" class="section level1">
+<h1>Part 1</h1>
+<div id="data-inspection" class="section level2">
+<h2>Data Inspection</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKGZhbmcpXG5zdHIocG9zaXRpb24pXG5kaW0oZmFuZylcbmRpbShwb3NpdGlvbilcbm5yb3coZmFuZylcbm5yb3cocG9zaXRpb24pXG5uY29sKGZhbmcpXG5uY29sKHBvc2l0aW9uKVxuXG5oZWFkKGZhbmcsIG4gPSAxKVxuaGVhZChwb3NpdGlvbiwgbiA9IDMpXG5gYGAifQ== -->
@@ -200,8 +210,10 @@ head(position, n = 3)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Data processing</p>
-<p>Subset unnecessary columns</p>
+</div>
+<div id="data-processing" class="section level2">
+<h2>Data processing</h2>
+<p>Subset necessary columns</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmFuZ19zdWJzZXQgPC0gc3Vic2V0KGZhbmcsIHNlbGVjdCA9IC1jKDE6MikpXG5gYGAifQ== -->
@@ -212,57 +224,170 @@ head(position, n = 3)</code></pre>
 <p>Extracting maize and teosinte data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVvc2ludGVfZXh0cmFjdGVkIDwtIGZhbmdbZmFuZyRHcm91cCAlaW4lIHRlb3NpbnRlXVxuXG5gYGAifQ== -->
-<pre class="r"><code>teosinte_extracted &lt;- fang[fang$Group %in% teosinte]
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemUgPC0gYyhcIlpNTUlMXCIsXCJaTU1MUlwiLFwiWk1NTVJcIilcbm1haXplX2V4dHJhY3RlZCA8LSBmYW5nX3N1YnNldFtmYW5nX3N1YnNldCRHcm91cCAlaW4lIG1haXplLF1cbnRlb3NpbnRlIDwtIGMoXCJaTVBCQVwiLCBcIlpNUElMXCIsIFwiWk1QSkFcIilcbnRlb3NpbnRlX2V4dHJhY3RlZCA8LSBmYW5nX3N1YnNldFtmYW5nX3N1YnNldCRHcm91cCAlaW4lIHRlb3NpbnRlLF1cbmBgYCJ9 -->
+<pre class="r"><code>maize &lt;- c(&quot;ZMMIL&quot;,&quot;ZMMLR&quot;,&quot;ZMMMR&quot;)
+maize_extracted &lt;- fang_subset[fang_subset$Group %in% maize,]
+teosinte &lt;- c(&quot;ZMPBA&quot;, &quot;ZMPIL&quot;, &quot;ZMPJA&quot;)
+teosinte_extracted &lt;- fang_subset[fang_subset$Group %in% teosinte,]</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gYFsuZGF0YS5mcmFtZWAoZmFuZywgZmFuZyRHcm91cCAlaW4lIHRlb3NpbnRlKSA6IFxuICB1bmRlZmluZWQgY29sdW1ucyBzZWxlY3RlZFxuIn0= -->
-<pre><code>Error in `[.data.frame`(fang, fang$Group %in% teosinte) : 
-  undefined columns selected</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Transpose the data</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfdHJhbnNwb3NlZCA8LSBhcy5kYXRhdC5mcmFtZSh0KG1haXplX2V4dHJhY3RlZFssLTFdKSlcblxuYGBgIn0= -->
-<pre class="r"><code>maize_transposed &lt;- as.datat.frame(t(maize_extracted[,-1]))
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfdHJhbnNwb3NlZCA8LSBhcy5kYXRhLmZyYW1lKHQobWFpemVfZXh0cmFjdGVkWywtMV0pKVxudGVvc2ludGVfdHJhbnNwb3NlZCA8LSBhcy5kYXRhLmZyYW1lKHQodGVvc2ludGVfZXh0cmFjdGVkWywtMV0pKVxuYGBgIn0= -->
+<pre class="r"><code>maize_transposed &lt;- as.data.frame(t(maize_extracted[,-1]))
+teosinte_transposed &lt;- as.data.frame(t(teosinte_extracted[,-1]))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IGNvdWxkIG5vdCBmaW5kIGZ1bmN0aW9uIFwiYXMuZGF0YXQuZnJhbWVcIlxuIn0= -->
-<pre><code>Error: could not find function &quot;as.datat.frame&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Subset columns of snp_position file that matter</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zaXRpb25fc3Vic2V0IDwtIHN1YnNldChwb3NpdGlvbiwgc2VsZWN0ID0gKGMxLDMsNCkpXG5cbmBgYCJ9 -->
-<pre class="r"><code>position_subset &lt;- subset(position, select = (c1,3,4))
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zaXRpb25fc3Vic2V0IDwtIHN1YnNldChwb3NpdGlvbiwgc2VsZWN0ID0gYygxLDMsNCkpXG5gYGAifQ== -->
+<pre class="r"><code>position_subset &lt;- subset(position, select = c(1,3,4))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IHVuZXhwZWN0ZWQgJywnIGluIFwicG9zaXRpb25fc3Vic2V0IDwtIHN1YnNldChwb3NpdGlvbiwgc2VsZWN0ID0gKGMxLFwiXG4ifQ== -->
-<pre><code>Error: unexpected ',' in &quot;position_subset &lt;- subset(position, select = (c1,&quot;</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Sort files</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucG9zaXRpb25fc29ydGVkIDwtIHBvc2l0aW9uX3N1YnNldFtvcmRlcihwb3NpdGlvbl9zb3J0ZWQkU05QX0lEKSxdXG5cbmBgYCJ9 -->
-<pre class="r"><code>position_sorted &lt;- position_subset[order(position_sorted$SNP_ID),]
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfc29ydGVkIDwtIG1haXplX3RyYW5zcG9zZWRbb3JkZXIocm93Lm5hbWVzKG1haXplX3RyYW5zcG9zZWQpKSxdXG50ZW9zaW50ZV9zb3J0ZWQgPC0gdGVvc2ludGVfdHJhbnNwb3NlZFtvcmRlcihyb3cubmFtZXModGVvc2ludGVfdHJhbnNwb3NlZCkpLF1cbnBvc2l0aW9uX3NvcnRlZCA8LSBwb3NpdGlvbl9zdWJzZXRbb3JkZXIocG9zaXRpb25fc3Vic2V0JFNOUF9JRCksXVxuYGBgIn0= -->
+<pre class="r"><code>maize_sorted &lt;- maize_transposed[order(row.names(maize_transposed)),]
+teosinte_sorted &lt;- teosinte_transposed[order(row.names(teosinte_transposed)),]
+position_sorted &lt;- position_subset[order(position_subset$SNP_ID),]</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gb3JkZXIocG9zaXRpb25fc29ydGVkJFNOUF9JRCkgOiBcbiAgb2JqZWN0ICdwb3NpdGlvbl9zb3J0ZWQnIG5vdCBmb3VuZFxuIn0= -->
-<pre><code>Error in order(position_sorted$SNP_ID) : 
-  object 'position_sorted' not found</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>function reshape - for the second part of the homework</p>
+<p>Remove data from “unknown and random” chromosomes in SNP position file</p>
 <!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2hyb20gPC0gYygxLDIsMyw0LDUsNiw3LDgsOSwxMClcbnBvc2l0aW9uX3NvcnRlZF9zZWxlY3RlZCA8LSBzdWJzZXQocG9zaXRpb25fc29ydGVkLCBDaHJvbW9zb21lICVpbiUgY2hyb20pXG5wb3NpdGlvbl9zb3J0ZWQgPC0gcG9zaXRpb25fc29ydGVkX3NlbGVjdGVkWy0xLF1cbmBgYCJ9 -->
+<pre class="r"><code>chrom &lt;- c(1,2,3,4,5,6,7,8,9,10)
+position_sorted_selected &lt;- subset(position_sorted, Chromosome %in% chrom)
+position_sorted &lt;- position_sorted_selected[-1,]</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Making row names as columns so I can join the data frames</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfcm93IDwtIGFkZF9yb3duYW1lcyhtYWl6ZV9zb3J0ZWQsIFwiU05QX0lEXCIpXG50ZW9zaW50ZV9yb3cgPC0gYWRkX3Jvd25hbWVzKHRlb3NpbnRlX3NvcnRlZCwgXCJTTlBfSURcIilcbmBgYCJ9 -->
+<pre class="r"><code>maize_row &lt;- add_rownames(maize_sorted, &quot;SNP_ID&quot;)
+teosinte_row &lt;- add_rownames(teosinte_sorted, &quot;SNP_ID&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Merge maize and teosinte data with snp position data</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfbWVyZ2VkIDwtIG1lcmdlKHBvc2l0aW9uX3NvcnRlZCwgbWFpemVfcm93LCBieT1cIlNOUF9JRFwiKVxudGVvc2ludGVfbWVyZ2VkIDwtIG1lcmdlKHBvc2l0aW9uX3NvcnRlZCwgdGVvc2ludGVfcm93LCBieT1cIlNOUF9JRFwiKVxuYGBgIn0= -->
+<pre class="r"><code>maize_merged &lt;- merge(position_sorted, maize_row, by=&quot;SNP_ID&quot;)
+teosinte_merged &lt;- merge(position_sorted, teosinte_row, by=&quot;SNP_ID&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Sort by SNP position - ascending order</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfc29ydGVkX2J5X3Bvc2l0aW9uIDwtIGFycmFuZ2UobWFpemVfbWVyZ2VkLCBQb3NpdGlvbikgICNhc2NlbmRpbmcgcG9zaXRpb25cbnRlb3NpbnRlX3NvcnRlZF9ieV9wb3NpdGlvbiA8LSBhcnJhbmdlKHRlb3NpbnRlX21lcmdlZCwgUG9zaXRpb24pICNhc2NlbmRpbmcgcG9zaXRpb24gXG5gYGAifQ== -->
+<pre class="r"><code>maize_sorted_by_position &lt;- arrange(maize_merged, Position)  #ascending position
+teosinte_sorted_by_position &lt;- arrange(teosinte_merged, Position) #ascending position </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Substitute symbols - no data by ?</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3N1YihcIlwiLFwiP1wiLCBtYWl6ZV9zb3J0ZWRfYnlfcG9zaXRpb24pIFxuZ3N1YihcIlwiLCBcIj9cIiwgdGVvc2ludGVfc29ydGVkX2J5X3Bvc2l0aW9uKVxuYGBgIn0= -->
+<pre class="r"><code>gsub(&quot;&quot;,&quot;?&quot;, maize_sorted_by_position) 
+gsub(&quot;&quot;, &quot;?&quot;, teosinte_sorted_by_position)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Sort by SNP position - descending order</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWFpemVfZGVzY19zb3J0ZWRfYnlfcG9zaXRpb24gPC0gYXJyYW5nZShtYWl6ZV9tZXJnZWQsIGRlc2MoUG9zaXRpb24pKVxudGVvc2ludGVfZGVzY19zb3J0ZWRfYnlfcG9zaXRpb24gPC0gYXJyYW5nZSh0ZW9zaW50ZV9tZXJnZWQsIGRlc2MoUG9zaXRpb24pKVxuYGBgIn0= -->
+<pre class="r"><code>maize_desc_sorted_by_position &lt;- arrange(maize_merged, desc(Position))
+teosinte_desc_sorted_by_position &lt;- arrange(teosinte_merged, desc(Position))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Substitute symbols - no data by -</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ3N1YihcIlwiLFwiLVwiLCBtYWl6ZV9kZXNjX3NvcnRlZF9ieV9wb3NpdGlvbikgXG5nc3ViKFwiXCIsXCItXCIsIHRlb3NpbnRlX2Rlc2Nfc29ydGVkX2J5X3Bvc2l0aW9uKVxuYGBgIn0= -->
+<pre class="r"><code>gsub(&quot;&quot;,&quot;-&quot;, maize_desc_sorted_by_position) 
+gsub(&quot;&quot;,&quot;-&quot;, teosinte_desc_sorted_by_position)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Extract data by chromosome number</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZm9yKGkgaW4gMToxMCl7XG4gdGVtcF9kZjwtbWFpemVfc29ydGVkX2J5X3Bvc2l0aW9uW21haXplX3NvcnRlZF9ieV9wb3NpdGlvblssMl09PWksXVxuIHdyaXRlLmNzdih0ZW1wX2RmLCBwYXN0ZShcIm1haXplX2NoclwiLGksXCIuY3N2XCIsc2VwPVwiXCIpLHJvdy5uYW1lcz1GKX1cbmZvcihpIGluIDE6MTApe1xuIHRlbXBfZGY8LXRlb3NpbnRlX3NvcnRlZF9ieV9wb3NpdGlvblt0ZW9zaW50ZV9zb3J0ZWRfYnlfcG9zaXRpb25bLDJdPT1pLF1cbiB3cml0ZS5jc3YodGVtcF9kZiwgcGFzdGUoXCJ0ZW9zaW50ZV9jaHJcIixpLFwiLmNzdlwiLHNlcD1cIlwiKSxyb3cubmFtZXM9Ril9XG5mb3IoaSBpbiAxOjEwKXtcbiB0ZW1wX2RmPC1tYWl6ZV9kZXNjX3NvcnRlZF9ieV9wb3NpdGlvblttYWl6ZV9kZXNjX3NvcnRlZF9ieV9wb3NpdGlvblssMl09PWksXVxuIHdyaXRlLmNzdih0ZW1wX2RmLCBwYXN0ZShcIm1haXplX2Rlc2NfY2hyXCIsaSxcIi5jc3ZcIixzZXA9XCJcIikscm93Lm5hbWVzPUYpfVxuZm9yKGkgaW4gMToxMCl7XG4gdGVtcF9kZjwtdGVvc2ludGVfZGVzY19zb3J0ZWRfYnlfcG9zaXRpb25bdGVvc2ludGVfZGVzY19zb3J0ZWRfYnlfcG9zaXRpb25bLDJdPT1pLF1cbiB3cml0ZS5jc3YodGVtcF9kZiwgcGFzdGUoXCJ0ZW9zaW50ZV9kZXNjX2NoclwiLGksXCIuY3N2XCIsc2VwPVwiXCIpLHJvdy5uYW1lcz1GKX1cbmBgYCJ9 -->
+<pre class="r"><code>for(i in 1:10){
+ temp_df&lt;-maize_sorted_by_position[maize_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste(&quot;maize_chr&quot;,i,&quot;.csv&quot;,sep=&quot;&quot;),row.names=F)}
+for(i in 1:10){
+ temp_df&lt;-teosinte_sorted_by_position[teosinte_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste(&quot;teosinte_chr&quot;,i,&quot;.csv&quot;,sep=&quot;&quot;),row.names=F)}
+for(i in 1:10){
+ temp_df&lt;-maize_desc_sorted_by_position[maize_desc_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste(&quot;maize_desc_chr&quot;,i,&quot;.csv&quot;,sep=&quot;&quot;),row.names=F)}
+for(i in 1:10){
+ temp_df&lt;-teosinte_desc_sorted_by_position[teosinte_desc_sorted_by_position[,2]==i,]
+ write.csv(temp_df, paste(&quot;teosinte_desc_chr&quot;,i,&quot;.csv&quot;,sep=&quot;&quot;),row.names=F)}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="part-1-finished" class="section level3">
+<h3>Part 1 finished</h3>
+</div>
+</div>
+</div>
+<div id="part-2" class="section level1">
+<h1>Part 2</h1>
+<p>Tidying the data</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShyZXNoYXBlMilcbm1haXplX3Jlc2hhcGVkIDwtIG1lbHQobWFpemVfbWVyZ2VkLCBpZD0oYyhcIlNOUF9JRFwiLFwiQ2hyb21vc29tZVwiLFwiUG9zaXRpb25cIikpKVxudGVvc2ludGVfcmVzaGFwZWQgPC0gbWVsdCh0ZW9zaW50ZV9tZXJnZWQsIGlkPShjKFwiU05QX0lEXCIsXCJDaHJvbW9zb21lXCIsXCJQb3NpdGlvblwiKSkpXG5gYGAifQ== -->
+<pre class="r"><code>library(reshape2)
+maize_reshaped &lt;- melt(maize_merged, id=(c(&quot;SNP_ID&quot;,&quot;Chromosome&quot;,&quot;Position&quot;)))
+teosinte_reshaped &lt;- melt(teosinte_merged, id=(c(&quot;SNP_ID&quot;,&quot;Chromosome&quot;,&quot;Position&quot;)))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Plot total number of SNPs by chromosome number</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Create new column indicating if site is homozygous or heterozygous</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Substitute missing data with NA</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Sort dataframe by Species_ID and Group values</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Graph that shows the proportion of homozygous and heterozygous sites as well as missing data in each species</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBBc3NpZ25tZW50IgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tClNldHRpbmcgdGhlIGRpcmVjdG9yeQpgYGB7cn0Kc2V0d2QoIn4vRGVza3RvcC9CaW9EYXRhU2tpbGxzQ2xhc3MvVU5JWF9Bc3NpZ25tZW50IikKYGBgCgpMb2FkaW5nIGZpbGVzIHRvIFIKCmBgYHtyfQpmYW5nIDwtIHJlYWQudGFibGUoImZhbmdfZXRfYWxfZ2Vub3R5cGVzLnR4dCIsIGhlYWRlciA9IFRSVUUgKQpwb3NpdGlvbiA8LSByZWFkLnRhYmxlKCJzbnBfcG9zaXRpb24udHh0IiwgaGVhZGVyID0gVFJVRSwgZmlsbCA9IFRSVUUpCmBgYAoKRGF0YSBJbnNwZWN0aW9uCmBgYHtyfQpzdHIoZmFuZykKc3RyKHBvc2l0aW9uKQpkaW0oZmFuZykKZGltKHBvc2l0aW9uKQpucm93KGZhbmcpCm5yb3cocG9zaXRpb24pCm5jb2woZmFuZykKbmNvbChwb3NpdGlvbikKCmhlYWQoZmFuZywgbiA9IDEpCmhlYWQocG9zaXRpb24sIG4gPSAzKQpgYGAKCkRhdGEgcHJvY2Vzc2luZwoKU3Vic2V0IHVubmVjZXNzYXJ5IGNvbHVtbnMKYGBge3J9CmZhbmdfc3Vic2V0IDwtIHN1YnNldChmYW5nLCBzZWxlY3QgPSAtYygxOjIpKQpgYGAKCkV4dHJhY3RpbmcgbWFpemUgYW5kIHRlb3NpbnRlIGRhdGEKYGBge3J9Cm1haXplIDwtIGMoIlpNTUlMIiwiWk1NTFIiLCJaTU1NUiIpCm1haXplX2V4dHJhY3RlZCA8LSBmYW5nX3N1YnNldFtmYW5nX3N1YnNldCRHcm91cCAlaW4lIG1haXplLF0KCnRlb3NpbnRlIDwtIGMoIlpNUEJBIiwgIlpNUElMIiwgIlpNUEpBIikKdGVvc2ludGVfZXh0cmFjdGVkIDwtIGZhbmdfc3Vic2V0W2Zhbmdfc3Vic2V0JEdyb3VwICVpbiUgdGVvc2ludGUsXQpgYGAKClRyYW5zcG9zZSB0aGUgZGF0YQpgYGB7cn0KbWFpemVfdHJhbnNwb3NlZCA8LSBhcy5kYXRhLmZyYW1lKHQobWFpemVfZXh0cmFjdGVkWywtMV0pKQoKdGVvc2ludGVfdHJhbnNwb3NlZCA8LSBhcy5kYXRhLmZyYW1lKHQodGVvc2ludGVfZXh0cmFjdGVkWywtMV0pKQpgYGAKClN1YnNldCBjb2x1bW5zIG9mIHNucF9wb3NpdGlvbiBmaWxlIHRoYXQgbWF0dGVyCmBgYHtyfQpwb3NpdGlvbl9zdWJzZXQgPC0gc3Vic2V0KHBvc2l0aW9uLCBzZWxlY3QgPSBjKDEsMyw0KSkKYGBgCgpTb3J0IGZpbGVzCmBgYHtyfQpuZXdfZGYgPC0gZGZbIG9yZGVyKHJvdy5uYW1lcyhkZikpLCBdCm1haXplX3NvcnRlZCA8LSBtYWl6ZV90cmFuc3Bvc2VkW29yZGVyKHJvdy5uYW1lcyhtYWl6ZV90cmFuc3Bvc2VkKSksXQp0ZW9zaW50ZV9zb3J0ZWQgPC0gdGVvc2ludGVfdHJhbnNwb3NlZFtvcmRlcihyb3cubmFtZXModGVvc2ludGVfdHJhbnNwb3NlZCkpLF0KcG9zaXRpb25fc29ydGVkIDwtIHBvc2l0aW9uX3N1YnNldFtvcmRlcihwb3NpdGlvbl9zdWJzZXQkU05QX0lEKSxdCmBgYAoKCmZ1bmN0aW9uIHJlc2hhcGUgLSBmb3IgdGhlIHNlY29uZCBwYXJ0IG9mIHRoZSBob21ld29yaw==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBBc3NpZ25tZW50IgpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sKLS0tClNldHRpbmcgdGhlIGRpcmVjdG9yeQpgYGB7cn0Kc2V0d2QoIn4vRGVza3RvcC9CaW9EYXRhU2tpbGxzQ2xhc3MvVU5JWF9Bc3NpZ25tZW50IikKYGBgCgpMb2FkaW5nIGZpbGVzIHRvIFIKCmBgYHtyfQpmYW5nIDwtIHJlYWQudGFibGUoImZhbmdfZXRfYWxfZ2Vub3R5cGVzLnR4dCIsIGhlYWRlciA9IFRSVUUgKQpwb3NpdGlvbiA8LSByZWFkLnRhYmxlKCJzbnBfcG9zaXRpb24udHh0IiwgaGVhZGVyID0gVFJVRSwgZmlsbCA9IFRSVUUpCmBgYAojUGFydCAxCgojI0RhdGEgSW5zcGVjdGlvbgpgYGB7cn0Kc3RyKGZhbmcpCnN0cihwb3NpdGlvbikKZGltKGZhbmcpCmRpbShwb3NpdGlvbikKbnJvdyhmYW5nKQpucm93KHBvc2l0aW9uKQpuY29sKGZhbmcpCm5jb2wocG9zaXRpb24pCgpoZWFkKGZhbmcsIG4gPSAxKQpoZWFkKHBvc2l0aW9uLCBuID0gMykKYGBgCgojI0RhdGEgcHJvY2Vzc2luZwoKU3Vic2V0IG5lY2Vzc2FyeSBjb2x1bW5zCmBgYHtyfQpmYW5nX3N1YnNldCA8LSBzdWJzZXQoZmFuZywgc2VsZWN0ID0gLWMoMToyKSkKYGBgCgpFeHRyYWN0aW5nIG1haXplIGFuZCB0ZW9zaW50ZSBkYXRhCmBgYHtyfQptYWl6ZSA8LSBjKCJaTU1JTCIsIlpNTUxSIiwiWk1NTVIiKQptYWl6ZV9leHRyYWN0ZWQgPC0gZmFuZ19zdWJzZXRbZmFuZ19zdWJzZXQkR3JvdXAgJWluJSBtYWl6ZSxdCgp0ZW9zaW50ZSA8LSBjKCJaTVBCQSIsICJaTVBJTCIsICJaTVBKQSIpCnRlb3NpbnRlX2V4dHJhY3RlZCA8LSBmYW5nX3N1YnNldFtmYW5nX3N1YnNldCRHcm91cCAlaW4lIHRlb3NpbnRlLF0KYGBgCgpUcmFuc3Bvc2UgdGhlIGRhdGEKYGBge3J9Cm1haXplX3RyYW5zcG9zZWQgPC0gYXMuZGF0YS5mcmFtZSh0KG1haXplX2V4dHJhY3RlZFssLTFdKSkKCnRlb3NpbnRlX3RyYW5zcG9zZWQgPC0gYXMuZGF0YS5mcmFtZSh0KHRlb3NpbnRlX2V4dHJhY3RlZFssLTFdKSkKYGBgCgpTdWJzZXQgY29sdW1ucyBvZiBzbnBfcG9zaXRpb24gZmlsZSB0aGF0IG1hdHRlcgpgYGB7cn0KcG9zaXRpb25fc3Vic2V0IDwtIHN1YnNldChwb3NpdGlvbiwgc2VsZWN0ID0gYygxLDMsNCkpCmBgYAoKU29ydCBmaWxlcwpgYGB7cn0KbWFpemVfc29ydGVkIDwtIG1haXplX3RyYW5zcG9zZWRbb3JkZXIocm93Lm5hbWVzKG1haXplX3RyYW5zcG9zZWQpKSxdCnRlb3NpbnRlX3NvcnRlZCA8LSB0ZW9zaW50ZV90cmFuc3Bvc2VkW29yZGVyKHJvdy5uYW1lcyh0ZW9zaW50ZV90cmFuc3Bvc2VkKSksXQpwb3NpdGlvbl9zb3J0ZWQgPC0gcG9zaXRpb25fc3Vic2V0W29yZGVyKHBvc2l0aW9uX3N1YnNldCRTTlBfSUQpLF0KYGBgCgpSZW1vdmUgZGF0YSBmcm9tICJ1bmtub3duIGFuZCByYW5kb20iIGNocm9tb3NvbWVzIGluIFNOUCBwb3NpdGlvbiBmaWxlCmBgYHtyfQpjaHJvbSA8LSBjKDEsMiwzLDQsNSw2LDcsOCw5LDEwKQpwb3NpdGlvbl9zb3J0ZWRfc2VsZWN0ZWQgPC0gc3Vic2V0KHBvc2l0aW9uX3NvcnRlZCwgQ2hyb21vc29tZSAlaW4lIGNocm9tKQpwb3NpdGlvbl9zb3J0ZWQgPC0gcG9zaXRpb25fc29ydGVkX3NlbGVjdGVkWy0xLF0KYGBgCk1ha2luZyByb3cgbmFtZXMgYXMgY29sdW1ucyBzbyBJIGNhbiBqb2luIHRoZSBkYXRhIGZyYW1lcwpgYGB7cn0KbWFpemVfcm93IDwtIGFkZF9yb3duYW1lcyhtYWl6ZV9zb3J0ZWQsICJTTlBfSUQiKQp0ZW9zaW50ZV9yb3cgPC0gYWRkX3Jvd25hbWVzKHRlb3NpbnRlX3NvcnRlZCwgIlNOUF9JRCIpCmBgYAoKTWVyZ2UgbWFpemUgYW5kIHRlb3NpbnRlIGRhdGEgd2l0aCBzbnAgcG9zaXRpb24gZGF0YQpgYGB7cn0KbWFpemVfbWVyZ2VkIDwtIG1lcmdlKHBvc2l0aW9uX3NvcnRlZCwgbWFpemVfcm93LCBieT0iU05QX0lEIikKdGVvc2ludGVfbWVyZ2VkIDwtIG1lcmdlKHBvc2l0aW9uX3NvcnRlZCwgdGVvc2ludGVfcm93LCBieT0iU05QX0lEIikKYGBgIAoKU29ydCBieSBTTlAgcG9zaXRpb24gLSBhc2NlbmRpbmcgb3JkZXIKYGBge3J9Cm1haXplX3NvcnRlZF9ieV9wb3NpdGlvbiA8LSBhcnJhbmdlKG1haXplX21lcmdlZCwgUG9zaXRpb24pICAjYXNjZW5kaW5nIHBvc2l0aW9uCnRlb3NpbnRlX3NvcnRlZF9ieV9wb3NpdGlvbiA8LSBhcnJhbmdlKHRlb3NpbnRlX21lcmdlZCwgUG9zaXRpb24pICNhc2NlbmRpbmcgcG9zaXRpb24gCmBgYAoKU3Vic3RpdHV0ZSBzeW1ib2xzIC0gbm8gZGF0YSBieSA/CmBgYHtyfQpnc3ViKCIiLCI/IiwgbWFpemVfc29ydGVkX2J5X3Bvc2l0aW9uKSAKZ3N1YigiIiwgIj8iLCB0ZW9zaW50ZV9zb3J0ZWRfYnlfcG9zaXRpb24pCmBgYAoKU29ydCBieSBTTlAgcG9zaXRpb24gLSBkZXNjZW5kaW5nIG9yZGVyCmBgYHtyfQptYWl6ZV9kZXNjX3NvcnRlZF9ieV9wb3NpdGlvbiA8LSBhcnJhbmdlKG1haXplX21lcmdlZCwgZGVzYyhQb3NpdGlvbikpCnRlb3NpbnRlX2Rlc2Nfc29ydGVkX2J5X3Bvc2l0aW9uIDwtIGFycmFuZ2UodGVvc2ludGVfbWVyZ2VkLCBkZXNjKFBvc2l0aW9uKSkKYGBgClN1YnN0aXR1dGUgc3ltYm9scyAtIG5vIGRhdGEgYnkgLQogCmBgYHtyfQpnc3ViKCIiLCItIiwgbWFpemVfZGVzY19zb3J0ZWRfYnlfcG9zaXRpb24pIApnc3ViKCIiLCItIiwgdGVvc2ludGVfZGVzY19zb3J0ZWRfYnlfcG9zaXRpb24pCmBgYAoKRXh0cmFjdCBkYXRhIGJ5IGNocm9tb3NvbWUgbnVtYmVyCmBgYHtyfQpmb3IoaSBpbiAxOjEwKXsKIHRlbXBfZGY8LW1haXplX3NvcnRlZF9ieV9wb3NpdGlvblttYWl6ZV9zb3J0ZWRfYnlfcG9zaXRpb25bLDJdPT1pLF0KIHdyaXRlLmNzdih0ZW1wX2RmLCBwYXN0ZSgibWFpemVfY2hyIixpLCIuY3N2IixzZXA9IiIpLHJvdy5uYW1lcz1GKX0KCmZvcihpIGluIDE6MTApewogdGVtcF9kZjwtdGVvc2ludGVfc29ydGVkX2J5X3Bvc2l0aW9uW3Rlb3NpbnRlX3NvcnRlZF9ieV9wb3NpdGlvblssMl09PWksXQogd3JpdGUuY3N2KHRlbXBfZGYsIHBhc3RlKCJ0ZW9zaW50ZV9jaHIiLGksIi5jc3YiLHNlcD0iIikscm93Lm5hbWVzPUYpfQoKZm9yKGkgaW4gMToxMCl7CiB0ZW1wX2RmPC1tYWl6ZV9kZXNjX3NvcnRlZF9ieV9wb3NpdGlvblttYWl6ZV9kZXNjX3NvcnRlZF9ieV9wb3NpdGlvblssMl09PWksXQogd3JpdGUuY3N2KHRlbXBfZGYsIHBhc3RlKCJtYWl6ZV9kZXNjX2NociIsaSwiLmNzdiIsc2VwPSIiKSxyb3cubmFtZXM9Ril9Cgpmb3IoaSBpbiAxOjEwKXsKIHRlbXBfZGY8LXRlb3NpbnRlX2Rlc2Nfc29ydGVkX2J5X3Bvc2l0aW9uW3Rlb3NpbnRlX2Rlc2Nfc29ydGVkX2J5X3Bvc2l0aW9uWywyXT09aSxdCiB3cml0ZS5jc3YodGVtcF9kZiwgcGFzdGUoInRlb3NpbnRlX2Rlc2NfY2hyIixpLCIuY3N2IixzZXA9IiIpLHJvdy5uYW1lcz1GKX0KYGBgCgoKIyMjUGFydCAxIGZpbmlzaGVkCgojUGFydCAyCgpUaWR5aW5nIHRoZSBkYXRhIApgYGB7cn0KbGlicmFyeShyZXNoYXBlMikKbWFpemVfcmVzaGFwZWQgPC0gbWVsdChtYWl6ZV9tZXJnZWQsIGlkPShjKCJTTlBfSUQiLCJDaHJvbW9zb21lIiwiUG9zaXRpb24iKSkpCnRlb3NpbnRlX3Jlc2hhcGVkIDwtIG1lbHQodGVvc2ludGVfbWVyZ2VkLCBpZD0oYygiU05QX0lEIiwiQ2hyb21vc29tZSIsIlBvc2l0aW9uIikpKQpgYGAKClBsb3QgdG90YWwgbnVtYmVyIG9mIFNOUHMgYnkgY2hyb21vc29tZSBudW1iZXIKYGBge3J9CgpgYGAKCkNyZWF0ZSBuZXcgY29sdW1uIGluZGljYXRpbmcgaWYgc2l0ZSBpcyBob21venlnb3VzIG9yIGhldGVyb3p5Z291cwpgYGB7cn0KCmBgYAoKU3Vic3RpdHV0ZSBtaXNzaW5nIGRhdGEgd2l0aCBOQQpgYGB7cn0KCmBgYAoKU29ydCBkYXRhZnJhbWUgYnkgU3BlY2llc19JRCBhbmQgR3JvdXAgdmFsdWVzCmBgYHtyfQoKYGBgCgpHcmFwaCB0aGF0IHNob3dzIHRoZSBwcm9wb3J0aW9uIG9mIGhvbW96eWdvdXMgYW5kIGhldGVyb3p5Z291cyBzaXRlcyBhcyB3ZWxsIGFzIG1pc3NpbmcgZGF0YSBpbiBlYWNoIHNwZWNpZXMKYGBge3J9CgpgYGAKCg==</div>
 
 
 
