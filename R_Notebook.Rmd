@@ -15,6 +15,12 @@ position <- read.table("snp_position.txt", header = TRUE, fill = TRUE)
 ```
 #Part 1
 
+load packages
+```{r}
+library(dplyr)
+library(gtools)
+```
+
 ##Data Inspection
 ```{r}
 str(fang)
@@ -87,6 +93,8 @@ Sort by SNP position - ascending order
 ```{r}
 maize_sorted_by_position <- arrange(maize_merged, Position)  #ascending position
 teosinte_sorted_by_position <- arrange(teosinte_merged, Position) #ascending position 
+
+maize_sorted <- order_by()
 ```
 
 Substitute symbols - no data by ?
@@ -134,32 +142,70 @@ for(i in 1:10){
 Tidying the data 
 ```{r}
 library(reshape2)
+
 maize_reshaped <- melt(maize_merged, id=(c("SNP_ID","Chromosome","Position")))
+
 teosinte_reshaped <- melt(teosinte_merged, id=(c("SNP_ID","Chromosome","Position")))
+
+totalSNPs_maize <- with(maize_reshaped, aggregate(cbind(SNP_ID) ~ Chromosome, FUN=function(x){length(unique(x))}))
+
+totalSNPs_teosinte <- with(teosinte_reshaped, aggregate(cbind(SNP_ID) ~ Chromosome, FUN=function(x){length(unique(x))}))
 ```
 
 Plot total number of SNPs by chromosome number
 ```{r}
+library(ggplot2)
 
+ggplot(data = totalSNPs_maize, aes(x=Chromosome, y=SNP_ID)) + geom_bar(stat="identity")
+
+ggplot(data = totalSNPs_teosinte, aes(x=Chromosome, y=SNP_ID)) + geom_bar(stat="identity")
 ```
 
 Create new column indicating if site is homozygous or heterozygous
 ```{r}
+maize_reshaped$heterozygosity <- if (maize_reshaped$value == "A/A") {
+  print(homozygous)
+} else if (maize_reshaped$value == "C/C") {
+  print(homozygous)
+} else if (maize_reshaped$value == "G/G") {
+  print(homozygous)
+} else if (maize_reshaped$value == "T/T") {
+  print(homozygous)
+} else {
+  print(heterozygous)
+}
 
+teosinte_reshaped$heterozygosity <- if (teosinte_reshaped$value == "A/A") {
+  print(homozygous)
+} else if (teosinte_reshaped$value == "C/C") {
+  print(homozygous)
+} else if (teosinte_reshaped$value == "G/G") {
+  print(homozygous)
+} else if (teosinte_reshaped$value == "T/T") {
+  print(homozygous)
+} else {
+  print(heterozygous)
+}
+
+##Recode this section
 ```
 
-Substitute missing data with NA
+Substitute missing data by NA
 ```{r}
-
+gsub("?/?","NA", maize_reshaped) 
+gsub("?/?","NA", teosinte_reshaped)
 ```
 
 Sort dataframe by Species_ID and Group values
 ```{r}
+final_maize <- arrange(maize_reshaped, Species_ID, Group)
 
+final_teosinte <- arrange(teosinte_reshaped, Species_ID, Group)
 ```
 
 Graph that shows the proportion of homozygous and heterozygous sites as well as missing data in each species
 ```{r}
+ggplot(data = final_maize, aes(x=Group, y=heterozygosity)) + geom_bar(position="stack")
 
+ggplot(data = final_teosinte, aes(x=Group, y=heterozygosity)) + geom_bar(position="stack")
 ```
-
